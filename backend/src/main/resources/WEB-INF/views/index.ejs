@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fake News Detector</title>
+    <!-- Links our Step 9 CSS stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI Fake News Detector</h1>
+            <p>Deep Learning Academic Verification System</p>
+        </header>
+
+        <!-- Main Input Form Layer -->
+        <main class="main-content">
+            <section class="analyzer-card">
+                <h3>Paste News Content Here</h3>
+                <textarea id="newsText" placeholder="Paste the full text of a news article or a headline here to analyze its credibility..."></textarea>
+                <button id="analyzeBtn" onclick="analyzeText()">Analyze Article</button>
+            </section>
+
+            <!-- Real-Time Output Status Assessment Metrics -->
+            <section id="resultCard" class="result-card hidden">
+                <h3>Analysis Results</h3>
+                <div class="metric-container">
+                    <div id="statusBadge" class="badge">UNKNOWN</div>
+                    <div class="progress-bar-bg">
+                        <div id="probabilityFill" class="progress-bar-fill"></div>
+                    </div>
+                    <p id="probabilityText">Fake News Probability: 0%</p>
+                </div>
+            </section>
+
+            <!-- Dynamic Scan History Logs pulled directly from MongoDB -->
+            <section class="history-card">
+                <h3>📜 Recent Analysis Logs (Stored in MongoDB)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Content Snippet</th>
+                                <th>AI Assessment</th>
+                                <th>Fake Probability</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Java Controller loops through MongoDB data and prints it here -->
+                            <% if (typeof historyList !== 'undefined' && historyList.length > 0) { %>
+                                <% historyList.forEach(function(article) { %>
+                                    <tr>
+                                        <td class="text-snippet"><%= article.content %></td>
+                                        <td><span class="table-badge <%= article.prediction %>"><%= article.prediction %></span></td>
+                                        <td><%= article.fakeProbability %>%</td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr id="noHistoryRow">
+                                    <td colspan="3" class="no-data">No scans performed yet. Database is empty.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Links our upcoming Step 10 JavaScript file -->
+    <script src="/app.js"></script>
+</body>
+</html>
